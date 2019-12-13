@@ -1,0 +1,26 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">Evictions</h1>
+  </div>
+  <app-shared-list type="evictions">
+    <thead>
+      <tr>
+        <th>Eviction Id</th>
+        <th>Address</th>
+        <th>File Date</th>
+        <th>Supervisor District</th>
+        <th>Neighborhood</th>
+      </tr>
+    </thead>
+    <ng-template let-record="record">
+      <tr>
+        <td>{{record.eviction_id}}</td>
+        <td>{{record.address}}</td>
+        <td>{{record.file_date}}</td>
+        <td>{{record.supervisor_district}}</td>
+        <td>{{record.neighborhood}}</td>
+      </tr>
+    </ng-template>
+  </app-shared-list>
+</div>

@@ -4,7 +4,7 @@ services:
     image: postgres:11
   cron:
     build: .
-    image: francisli/primarytracker
+    image: francisli/omne
     command: bash -l -c "bin/cron"
     environment:
       - CLOUDFLARE_EMAIL=${CLOUDFLARE_EMAIL}
@@ -16,7 +16,7 @@ services:
       - db
   server:
     build: .
-    image: francisli/primarytracker
+    image: francisli/omne
     command: bash -l -c "npm start"
     environment:
       - APP_NAME=${APP_NAME}

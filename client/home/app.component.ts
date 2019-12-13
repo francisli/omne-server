@@ -9,18 +9,8 @@ import { ApiService, NavigationService } from '../shared/services';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  states: any[] = null;
-  showMenu = false;
-
   constructor(private api: ApiService, private location: Location) {}
 
   ngAfterViewInit() {
-    this.api.states.index().subscribe(response => {
-      this.states = response.body;
-    });
-  }
-
-  onJump() {
-    this.showMenu = false;
   }
 }

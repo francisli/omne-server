@@ -6,7 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import { PollsComponent } from './polls.component';
 
 import { ApiService, NavigationService } from '../shared/services';
 
@@ -14,7 +13,6 @@ import { ApiService, NavigationService } from '../shared/services';
 @NgModule({
   declarations: [
     AppComponent,
-    PollsComponent
   ],
   imports: [
     BrowserModule,

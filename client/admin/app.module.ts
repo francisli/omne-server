@@ -7,7 +7,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { StatesModule } from './states/states.module';
+import { BuyoutsModule } from './buyouts/buyouts.module';
+import { EvictionsModule } from './evictions/evictions.module';
 import { UsersModule } from './users/users.module';
 
 import { ApiService, NavigationService, UserService } from '../shared/services';
@@ -23,7 +24,8 @@ import { ApiService, NavigationService, UserService } from '../shared/services';
     FormsModule,
     HttpClientModule,
     NgbModule,
-    StatesModule,
+    BuyoutsModule,
+    EvictionsModule,
     UsersModule
   ],
   providers: [

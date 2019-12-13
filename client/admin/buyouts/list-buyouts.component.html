@@ -1,0 +1,26 @@
+<router-outlet></router-outlet>
+<div [class.d-none]="route.firstChild">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+    <h1 class="h2">Buyouts</h1>
+  </div>
+  <app-shared-list type="buyouts">
+    <thead>
+      <tr>
+        <th>Case Number</th>
+        <th>Date Buyout Filed</th>
+        <th>Buyout Amount</th>
+        <th>Block Address</th>
+        <th>Neighborhood</th>
+      </tr>
+    </thead>
+    <ng-template let-record="record">
+      <tr>
+        <td>{{record.case_number}}</td>
+        <td>{{record.date_buyout_filed}}</td>
+        <td>{{record.buyout_amount}}</td>
+        <td>{{record.block_address}}</td>
+        <td>{{record.analysis_neighborhood}}</td>
+      </tr>
+    </ng-template>
+  </app-shared-list>
+</div>

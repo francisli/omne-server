@@ -70,21 +70,15 @@ export class ApiService {
     }
   }
 
-  polls = {
+  buyouts = {
     index: (params?: HttpParams): Observable<any> => {
-      return this.get('/api/polls/', params);
+      return this.get('/api/buyouts/', params);
     },
   };
 
-  states = {
+  evictions = {
     index: (params?: HttpParams): Observable<any> => {
-      return this.get('/api/states/', params);
-    },
-    get: (id: string, params?: HttpParams): Observable<any> => {
-      return this.get(`/api/states/${id}`, params);
-    },
-    update: (id: string, data: any): Observable<any> => {
-      return this.patch(`/api/states/${id}`, data);
+      return this.get('/api/evictions/', params);
     },
   };
 

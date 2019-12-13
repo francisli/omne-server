@@ -1,0 +1,51 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const https = require('https');
+const _ = require('lodash');
+const path = require('path');
+
+
+require('dotenv').config({path: path.resolve(__dirname, '../.env')});
+
+const models = require('../models');
+const helpers = require('../routes/helpers');
+
+function download(url, filename) {
+  const promise = new Promise(function(resolve, reject) {
+    const file = fs.createWriteStream(filename);
+    const request = https.get(url, function(response) {
+      response.on('end', function() {
+        resolve();
+      });
+      response.pipe(file);
+    });
+  });
+  return promise;
+}
+
+async function extract() {
+  console.log('Downloading latest evictions data...');
+  let records;
+  let offset = 0;
+  const limit = 50000;
+  const evictionsPath = path.resolve(__dirname, '../tmp/evictions.json');
+  do {
+    await download(`https://data.sfgov.org/resource/5cei-gny5.json?$order=eviction_id&$offset=${offset}&$limit=${limit}`, evictionsPath);
+    records = JSON.parse(fs.readFileSync(evictionsPath));
+    for (let eviction of records) {
+      process.stdout.write('.')
+      const eviction_id = eviction.eviction_id;
+      const [record, created] = await models.Eviction.findOrCreate({where: {eviction_id}, defaults: {eviction_id}});
+      await record.update(eviction);
+    }
+    offset += records.length;
+  } while (records.length > 0);
+  console.log('!');
+}
+
+extract()
+  .then(function() {
+    console.log('Done!');
+    process.exit(0);
+  });

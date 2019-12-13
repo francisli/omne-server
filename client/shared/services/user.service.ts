@@ -27,18 +27,4 @@ export class UserService {
     }
     return false;
   }
-
-  isPropertyAdmin(propertyId: string) {
-    if (this.user) {
-      if (this.user.isAdmin) {
-        return true;
-      }
-      for (let membership of this.user.memberships) {
-        if (membership.propertyId == propertyId) {
-          return membership.isAdmin;
-        }
-      }
-    }
-    return false;
-  }
 }

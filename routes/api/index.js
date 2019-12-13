@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const pollsRouter = require('./polls');
-const statesRouter = require('./states');
+const buyoutsRouter = require('./buyouts');
+const evictionsRouter = require('./evictions');
 const uploadsRouter = require('./uploads');
 const usersRouter = require('./users');
 
-router.use('/polls', pollsRouter);
-router.use('/states', statesRouter);
+router.use('/buyouts', buyoutsRouter);
+router.use('/evictions', evictionsRouter);
 router.use('/uploads', uploadsRouter);
 router.use('/users', usersRouter);
 

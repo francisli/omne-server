@@ -5,9 +5,4 @@
 window.env = {};
 </script>
 <%- contentFor('body') %>
-<app-home>Loading...</app-home>
-<% for (let entry of ['home']) { %>
-  <% for (let chunk of webpackStats.chunks[entry]) { %>
-    <script type="application/javascript" src="<%= chunk.publicPath %>"></script>
-  <% } %>
-<% } %>
+<h1>Our Mission No Eviction</h1>

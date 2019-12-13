@@ -9,8 +9,8 @@ although it could be adapted to handle any year/party.
    into the directory.
 
    ```
-   $ git clone git@github.com:francisli/primarytracker.git
-   $ cd primarytracker
+   $ git clone git@github.com:francisli/omne.git
+   $ cd omne
    ```
 
 2. After cloning, your "local" repo (in this directory on your computer) will be linked to the "remote"
@@ -85,9 +85,9 @@ although it could be adapted to handle any year/party.
    If it is successful, you will see something like this:
 
    ```
-   Killing primarytracker_db_1           ... done
-   Killing primarytracker_server_1       ... done
-   Killing primarytracker_mailcatcher_1  ... done
+   Killing omne_db_1           ... done
+   Killing omne_server_1       ... done
+   Killing omne_mailcatcher_1  ... done
    ```
 
    If it is not successful, you may see something like this:
@@ -101,9 +101,9 @@ although it could be adapted to handle any year/party.
 
    ```
    $ bin/dcstop
-   Stopping primarytracker_db_1          ... done
-   Stopping primarytracker_server_1      ... done
-   Stopping primarytracker_mailcatcher_1 ... done
+   Stopping omne_db_1          ... done
+   Stopping omne_server_1      ... done
+   Stopping omne_mailcatcher_1 ... done
    ```
 
 10. That's it! After all this setup is complete, the only command you need to run to get

@@ -5,21 +5,20 @@ import { FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from '../../shared/components';
 import { SharedPipesModule } from '../../shared/pipes';
 
-import { StatesRoutingModule } from './states-routing.module';
-import { EditStateComponent, ListStatesComponent } from '.';
+import { EvictionsRoutingModule } from './evictions-routing.module';
+import { ListEvictionsComponent } from '.';
 
 @NgModule({
   declarations: [
-    EditStateComponent,
-    ListStatesComponent
+    ListEvictionsComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     SharedComponentsModule,
     SharedPipesModule,
-    StatesRoutingModule
+    EvictionsRoutingModule
   ],
   providers: []
 })
-export class StatesModule {}
+export class EvictionsModule {}
