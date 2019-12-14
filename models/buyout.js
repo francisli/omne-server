@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     other_consideration: DataTypes.BOOLEAN,
     number_of_tenants: DataTypes.STRING,
     block_address: DataTypes.STRING,
+    street_num: DataTypes.INTEGER,
+    street_address: DataTypes.STRING,
     zip_code: DataTypes.STRING,
     supervisor_district: DataTypes.STRING,
     analysis_neighborhood: DataTypes.STRING,

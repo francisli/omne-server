@@ -6,6 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   const Eviction = sequelize.define('Eviction', {
     eviction_id: DataTypes.STRING,
     address: DataTypes.STRING,
+    street_num: DataTypes.INTEGER,
+    street_address: DataTypes.STRING,
     city: DataTypes.STRING,
     state: DataTypes.STRING,
     zip: DataTypes.STRING,

@@ -24,19 +24,27 @@ function download(url, filename) {
   return promise;
 }
 
+const ADDRESS_RE = /(\d+) (.+)/i;
+
 async function extract() {
   console.log('Downloading latest buyouts data...');
   let records;
   let offset = 0;
   const limit = 50000;
-  const buyoutsPath = path.resolve(__dirname, '../tmp/buyouts.json');
   do {
+    const buyoutsPath = path.resolve(__dirname, `../tmp/buyouts_${offset}.json`);
     await download(`https://data.sfgov.org/resource/wmam-7g8d.json?$order=case_number&$offset=${offset}&$limit=${limit}`, buyoutsPath);
-    records = JSON.parse(fs.readFileSync(buyoutsPath));
+    records = JSON.parse(fs.readFileSync(buyoutsPath, 'utf8'));
     for (let buyout of records) {
       process.stdout.write('.')
       const case_number = buyout.case_number;
       const [record, created] = await models.Buyout.findOrCreate({where: {case_number}, defaults: {case_number}});
+      const address = buyout.block_address;
+      if (address) {
+        const match = ADDRESS_RE.exec(address);
+        buyout.street_num = parseInt(match[1]);
+        buyout.street_address = match[2];
+      }
       await record.update(buyout);
     }
     offset += records.length;

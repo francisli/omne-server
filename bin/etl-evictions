@@ -24,19 +24,27 @@ function download(url, filename) {
   return promise;
 }
 
+const ADDRESS_RE = /(\d+) Block Of (.+)/i;
+
 async function extract() {
   console.log('Downloading latest evictions data...');
   let records;
   let offset = 0;
   const limit = 50000;
-  const evictionsPath = path.resolve(__dirname, '../tmp/evictions.json');
   do {
+    const evictionsPath = path.resolve(__dirname, `../tmp/evictions_${offset}.json`);
     await download(`https://data.sfgov.org/resource/5cei-gny5.json?$order=eviction_id&$offset=${offset}&$limit=${limit}`, evictionsPath);
-    records = JSON.parse(fs.readFileSync(evictionsPath));
+    records = JSON.parse(fs.readFileSync(evictionsPath, 'utf8'));
     for (let eviction of records) {
       process.stdout.write('.')
       const eviction_id = eviction.eviction_id;
       const [record, created] = await models.Eviction.findOrCreate({where: {eviction_id}, defaults: {eviction_id}});
+      const address = eviction.address;
+      if (address) {
+        const match = ADDRESS_RE.exec(address);
+        eviction.street_num = parseInt(match[1]);
+        eviction.street_address = match[2];
+      }
       await record.update(eviction);
     }
     offset += records.length;

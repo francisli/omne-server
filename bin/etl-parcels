@@ -27,11 +27,11 @@ function download(url, filename) {
 async function extract() {
   console.log('Downloading latest parcels data...');
   let records;
-  let offset = 150000;
+  let offset = 0;
   const limit = 50000;
   do {
     const parcelsPath = path.resolve(__dirname, `../tmp/parcels_${offset}.json`);
-    await download(`https://data.sfgov.org/resource/acdm-wktn.json?$order=blklot&$offset=${offset}&$limit=${limit}`, parcelsPath);
+    // await download(`https://data.sfgov.org/resource/acdm-wktn.json?$order=blklot&$offset=${offset}&$limit=${limit}`, parcelsPath);
     records = JSON.parse(fs.readFileSync(parcelsPath, 'utf8'));
     for (let parcel of records) {
       process.stdout.write('.')
