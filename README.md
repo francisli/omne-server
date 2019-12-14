@@ -1,7 +1,4 @@
-# Primary Tracker
-
-This web application was created to track the 2020 Democratic Primary polls,
-although it could be adapted to handle any year/party.
+# Our Mission No Eviction
 
 ## Getting Started
 
@@ -13,7 +10,9 @@ although it could be adapted to handle any year/party.
    $ cd omne
    ```
 
-2. After cloning, your "local" repo (in this directory on your computer) will be linked to the "remote"
+   <!-- AFTER SETTING UP, DELETE FROM HERE... -->
+
+1. After cloning, your "local" repo (in this directory on your computer) will be linked to the "remote"
    repo (as the "origin"). To track and save your own work on top of this code, rename the remote
    to something else (in this example, to the name "upstream"):
 
@@ -21,7 +20,7 @@ although it could be adapted to handle any year/party.
    $ git remote rename origin upstream
    ```
 
-3. Create your own new git repo for your work, then push up and link your local repo
+1. Create your own new git repo for your work, then push up and link your local repo
    to it as the new "origin" :
 
    ```
@@ -29,7 +28,9 @@ although it could be adapted to handle any year/party.
    $ git push -u origin master
    ```
 
-4. There are some settings that must be configured to run the web application.
+   <!-- ... TO HERE!!! -->
+
+2. There are some settings that must be configured to run the web application.
    They are set as "environment variables" which are loaded from a file called ```.env```.
    Copy the ```example.env``` file as a starting point:
 
@@ -37,12 +38,12 @@ although it could be adapted to handle any year/party.
    $ cp example.env .env
    ```
 
-5. Install Docker Desktop: https://www.docker.com/products/docker-desktop
+3. Install Docker Desktop: https://www.docker.com/products/docker-desktop
 
    1. If you have Windows Home Edition, you will need to install Docker Toolbox instead.
    See the troubleshooting notes below.
 
-6. Open a command-line shell, change into your repo directory, and execute this command:
+4. Open a command-line shell, change into your repo directory, and execute this command:
 
    ```
    $ bin/up
@@ -60,7 +61,7 @@ although it could be adapted to handle any year/party.
    server_1       | 2:14:26 AM web.1     |  [nodemon] or send SIGHUP to 57 to restart
    ```
 
-7. Open ANOTHER command-line shell, change into your repo directory, then execute
+5. Open ANOTHER command-line shell, change into your repo directory, then execute
    this command to log in to the running server container:
 
    ```
@@ -74,14 +75,15 @@ although it could be adapted to handle any year/party.
    ```
    # sequelize db:create
    # sequelize db:migrate
+   # sequelize db:seed:all
    ```
 
-8. Now you should be able to open the web app in your browser at: http://localhost:3000/
+6. Now you should be able to open the web app in your browser at: http://localhost:3000/
 
    1. If you had to install Docker Toolbox, then replace "localhost" with the IP
    address of the Docker Virtual Machine.
 
-9. To stop the server, press CONTROL-C in the window with the running server.
+7. To stop the server, press CONTROL-C in the window with the running server.
    If it is successful, you will see something like this:
 
    ```
@@ -106,8 +108,127 @@ although it could be adapted to handle any year/party.
    Stopping omne_mailcatcher_1 ... done
    ```
 
-10. That's it! After all this setup is complete, the only command you need to run to get
+8. That's it! After all this setup is complete, the only command you need to run to get
 started again is the ```bin/up``` command.
+
+## Shell Command Quick Reference
+
+ * Every directory and file on your computer has a *path* that describes its location in storage. Special path symbols include:
+
+   * The current *working directory* you are in: `.`
+   * The *parent* of the current working directory: `..`
+   * Your *home* directory: `~`
+   * The *root* directory: `/` (Mac, Linux) or `\` (Windows)
+     * The same symbol is used as a *separator* when specifying multiple directories in a path
+     * If the path *starts* with the separator, it means the path starts at the *root*
+       * For example: `/Users/myusername/Documents`
+       * This is called an *absolute* path
+     * If the path *does not start* with the separator, it means the path starts at the current *working directory*
+       * For example, if the current *working directory* is: `/Users`  
+         then the same path as the previous example is: `myusername/Documents`
+       * This is called a *relative* path
+     * A path can also start with any of the above special path symbols
+       * For example, on Mac the same path as the previous example is: `~/Documents`
+
+ * To *print the working directory* (i.e. to see the full path of the directory you are currently in):
+
+   ```
+   $ pwd
+   ```
+
+ * To *list* the files in the working directory:
+
+   ```
+   $ ls -l
+   ```
+
+ * To *change* the working directory:
+
+   ```
+   $ cd path
+   ```
+
+ * To *make* a new directory inside the working directory:
+
+   ```
+   $ mkdir newpath
+   ```
+
+ * To create a new *empty file* inside the working directory:
+
+   ```
+   $ touch filename.ext
+   ```
+
+## git Command Quick Reference
+
+ * To check the *status* of the files in your local repo (i.e. what's been added or changed):
+
+   ```
+   $ git status
+   ```
+
+ * To *add all* the changed files to the next commit:
+
+   ```
+   $ git add .
+   ```
+
+   To *add specific file(s)* to the next commit:
+
+   ```
+   $ git add path/to/file1.ext path/to/file2.ext path/with/wildcard/*
+   ```
+
+ * To *commit* the added files with a message:
+
+   ```
+   $ git commit -m "My description of what's changed"
+   ```
+
+ * To *push* the commit to the remote repo:
+
+   ```
+   $ git push
+   ```
+
+ * To *pull* any new commits from the remote repo:
+
+   ```
+   $ git pull
+   ```
+
+## Docker Command Quick Reference
+
+ * To start all the containers:
+
+   ```
+   $ docker-compose up
+   ```
+
+ * To log in to the running server container:
+
+   ```
+   $ docker-compose exec server bash -l
+   ```
+
+ * To stop all the containers, in case things didn't shutdown properly with CTRL-C:
+
+   ```
+   $ docker-compose stop
+   ```
+
+ * To run the server container without starting everything using the up command:
+
+   ```
+   $ docker-compose run --rm server bash -l
+   ```
+
+ * To re-build the server container:
+
+   ```
+   $ docker-compose build server
+   ```
 
 ## Docker Troubleshooting
 
@@ -129,7 +250,7 @@ started again is the ```bin/up``` command.
 
 ## License
 
-Primary Tracker
+Our Mission No Eviction
 Copyright (C) 2019 Francis Li
 
 This program is free software: you can redistribute it and/or modify
