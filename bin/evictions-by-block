@@ -1,0 +1,87 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const https = require('https');
+const _ = require('lodash');
+const path = require('path');
+
+
+require('dotenv').config({path: path.resolve(__dirname, '../.env')});
+
+const models = require('../models');
+const Op = models.Sequelize.Op;
+const helpers = require('../routes/helpers');
+
+const attrs = [
+  'eviction_id',
+  'address',
+  'city',
+  'state',
+  'zip',
+  'file_date',
+  'non_payment',
+  'breach',
+  'nuisance',
+  'illegal_use',
+  'failure_to_sign_renewal',
+  'access_denial',
+  'unapproved_subtenant',
+  'owner_move_in',
+  'demolition',
+  'capital_improvement',
+  'substantial_rehab',
+  'ellis_act_withdrawal',
+  'condo_conversion',
+  'roommate_same_unit',
+  'other_cause',
+  'late_payments',
+  'lead_remediation',
+  'development',
+  'good_samaritan_ends',
+  'supervisor_district',
+  'neighborhood'
+];
+console.log(attrs.join(','));
+
+async function perform() {
+  const query = `
+    SELECT MIN(from_address_num), MAX(to_address_num), street_name
+    FROM parcels
+    WHERE block_num='${process.argv[2]}'
+    GROUP BY street_name
+    ORDER BY street_name
+  `;
+  const [addresses, metadata] = await models.sequelize.query(query);
+  for (let address of addresses) {
+    const min = Math.floor(address.min / 100.0) * 100;
+    const max = Math.ceil(address.max / 100.0) * 100;
+    // console.log(min, max, address.street_name);
+    const evictions = await models.Eviction.findAll({
+      where: {
+        street_num: {
+          [Op.and]: {
+            [Op.gte]: min,
+            [Op.lt]: max
+          }
+        },
+        street_address: {
+          [Op.iLike]: `${address.street_name}%`
+        }
+      }
+    });
+    for (let eviction of evictions) {
+      let values = [];
+      for (let attr of attrs) {
+        values.push(eviction[attr]);
+      }
+      console.log(values.join(','));
+    }
+  }
+}
+
+perform().then(function() {
+  process.exit(0);
+}).catch(function(error) {
+  console.error(error);
+  process.exit(1);
+});

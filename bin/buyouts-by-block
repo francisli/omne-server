@@ -1,0 +1,51 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const https = require('https');
+const _ = require('lodash');
+const path = require('path');
+
+
+require('dotenv').config({path: path.resolve(__dirname, '../.env')});
+
+const models = require('../models');
+const Op = models.Sequelize.Op;
+const helpers = require('../routes/helpers');
+
+async function perform() {
+  const query = `
+    SELECT MIN(from_address_num), MAX(to_address_num), street_name
+    FROM parcels
+    WHERE block_num='${process.argv[2]}'
+    GROUP BY street_name
+    ORDER BY street_name
+  `;
+  const [addresses, metadata] = await models.sequelize.query(query);
+  for (let address of addresses) {
+    console.log(`${address.min}-${address.max} ${address.street_name}`);
+  }
+  for (let address of addresses) {
+    const buyouts = await models.Buyout.findAll({
+      where: {
+        street_num: {
+          [Op.and]: {
+            [Op.gte]: address.min,
+            [Op.lte]: address.max
+          }
+        },
+        street_address: {
+          [Op.iLike]: `${address.street_name}%`
+        }
+      }
+    });
+    console.log(buyouts);
+  }
+}
+
+perform().then(function() {
+  console.log('Done!');
+  process.exit(0);
+}).catch(function(error) {
+  console.error();
+  process.exit(1);
+});
